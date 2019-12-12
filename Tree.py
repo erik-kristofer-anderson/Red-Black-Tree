@@ -53,6 +53,41 @@ class Tree:
                 curr_node = curr_node.right_child
         return None
 
+    def remove_node_by_node_reference_bst(self, node):
+        curr_node = node
+        # remove curr_node
+        if (not curr_node.left_child) and (not curr_node.right_child):  # curr_node is leaf
+            if not curr_node.parent:
+                self.root = None
+            elif curr_node.parent.left_child == curr_node:
+                curr_node.parent.left_child = None
+            else:  # in this case curr_node.parent.right_child == curr_node
+                curr_node.parent.right_child = None
+        elif curr_node.left_child and (not curr_node.right_child):  # curr_node has left_child only
+            if not curr_node.parent:  # curr_node is root
+                self.root = curr_node.left_child
+            elif curr_node.parent.left_child == curr_node:
+                curr_node.parent.left_child = curr_node.left_child
+            else:  # curr_node.parent.left_child == curr_node
+                curr_node.parent.right_child = curr_node.left_child
+        elif (not curr_node.left_child) and curr_node.right_child:  # curr_node has right_child only
+            if not curr_node.parent:
+                self.root = curr_node.right_child
+            elif curr_node.parent.left_child == curr_node:
+                curr_node.parent.left_child = curr_node.right_child
+            else:  # curr_node = curr_node.parent.right_child
+                curr_node.parent.right_child = curr_node.right_child
+        else:  # curr_node has left and right children
+            successor = curr_node.right_child
+            while successor.left_child:
+                successor_data = successor.value
+                self.remove_node_bst(successor.value)
+                curr_node.value = successor_data
+        return True  # node with value has been removed
+
+
+
+
     def remove_node_bst(self, value):
         """
         removes the first-found node with the given value
@@ -135,7 +170,7 @@ class Tree:
         print_2d_util(self.root, 0)
         print("---------------------------------------------------------------------------------------"
               "----------------------------------")
-        print()
+        print("===================================================")
 
     def in_order_traversal_util(self, curr_node):
         if not curr_node:
@@ -251,12 +286,12 @@ class Tree:
             return
         if node.color == "black":
             self.prepare_for_removal_rbt(node)
-        self.remove_node_bst(node)
+        self.remove_node_by_node_reference_bst(node)
 
     def remove_node_by_value_rbt(self, value):
         node = self.search(value)
         if node:
-            self.remove_node_bst(node)
+            self.remove_node_rbt(node)
 
     @staticmethod
     def get_pred_node_rbt(node):
@@ -294,7 +329,7 @@ class Tree:
         return True
 
     def prepare_for_removal_rbt(self, node):
-        if self.try_case_1_rbt(self, node):
+        if self.try_case_1_rbt(node):
             return
 
         sibling = self.get_sibling_rbt(node)
@@ -337,3 +372,36 @@ class Tree:
         return False
 
     def try_case_3_rbt(self, node, sibling):
+        if node.parent.color == "black" and self.are_both_children_black_rbt(sibling):
+            sibling.color = "red"
+            self.prepare_for_removal_rbt(node.parent)
+            return True
+        return False
+
+    def try_case_4_rbt(self, node, sibling):
+        if node.parent.color == "red" and self.are_both_children_black_rbt(sibling):
+            node.parent.color = "black"
+            sibling.color = "red"
+            return True
+        return False
+
+    def try_case_5_rbt(self, node, sibling):
+        if self.is_non_null_and_red_rbt(sibling.left_child) and self.is_null_or_black_rbt(sibling.right_child) \
+                and node == node.parent.left_child:
+            sibling.color = "red"
+            sibling.left_child.color = "black"
+            self.rotate_right(sibling)
+            return True
+        return False
+
+    def try_case_6_rbt(self, node, sibling):
+        if self.is_null_or_black_rbt(sibling.left_child) and self.is_non_null_and_red_rbt(sibling.right_child) \
+                and node == node.parent.right:
+            sibling.color = "red"
+            sibling.right_child.color = "black"
+            self.rotate_left(sibling)
+            return True
+        return False
+
+
+

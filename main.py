@@ -11,3 +11,8 @@ for i in numbers:
     my_balanced_tree.add_red_black_node(node, verbose=False)
 
 my_balanced_tree.pretty_print()
+
+for num in numbers:
+    my_balanced_tree.remove_node_by_value_rbt(num)
+
+my_balanced_tree.pretty_print()
