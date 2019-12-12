@@ -6,13 +6,13 @@ import datetime
 
 print("creating trees")
 tree_height_dict = {}
-repetitions = 200
-num_elements_start = 5
-num_elements_stop = 100
-num_elements_step = 5
+repetitions = 500
+num_elements_start = 1
+num_elements_stop = 1002
+num_elements_step = 100
 save = True
 show_plot = False
-plot_point_size_factor = 1
+plot_point_size_factor = .25
 
 for num_elements in range(num_elements_start, num_elements_stop, num_elements_step):
     print(f"num_elements = {num_elements}")
