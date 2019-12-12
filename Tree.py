@@ -175,6 +175,60 @@ class Tree:
         self.set_child_util(node.left_child, "right", node)
         self.set_child_util(node, "left", left_right_child)
 
+    def add_red_black_node(self, node):
+        self.add_node(node)
+        node.color = "red"
+        self.balance_tree(node)
+
+    @staticmethod
+    def util_get_grandparent(node):
+        if node.parent is None:
+            return None
+        return node.parent.parent
+
+    @staticmethod
+    def util_get_uncle(node):
+        grandparent = None
+        if node.parent:
+            grandparent = node.parent.parent
+        if not grandparent:
+            return None
+        if grandparent.left_child == node.parent:
+            return grandparent.right_child
+        else:
+            return grandparent.left
+
+    def balance_tree(self, node):
+        if node.parent is None:
+            node.color = "black"
+            return
+        if node.parent.color == "black":
+            return
+        parent = node.parent
+        grandparent = self.util_get_grandparent(node)
+        uncle = self.util_get_uncle(node)
+        if uncle and uncle.color == "red":
+            parent.color = uncle.color = "black"
+            grandparent.color = "red"
+            self.balance_tree(grandparent)
+            return
+        if node == parent.right_child and parent == grandparent.right_child:
+            self.rotate_left(parent)
+            node = parent
+            parent = node.parent
+        elif node == parent.left_child and parent == grandparent.right:
+            self.rotate_right(parent)
+            node = parent
+            parent = node.parent
+        parent.color = "black"
+        grandparent.color = "red"
+        if node == parent.left:
+            self.rotate_right(grandparent)
+        else:
+            self.rotate_left(grandparent)
+
+
+
 
 
 
