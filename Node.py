@@ -7,4 +7,4 @@ class Node:
         self.color = color
 
     def __str__(self):
-        return f"Node with value {self.value}"
+        return f"Node with value {self.value} and color {self.color}"

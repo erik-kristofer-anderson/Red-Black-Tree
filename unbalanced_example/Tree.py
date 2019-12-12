@@ -114,8 +114,8 @@ class Tree:
             space += my_count[0]
 
             print_2d_util(curr_node.right_child, space)
-
-            print()
+            print("--------------------------------------------------------------------------------------------"
+                  "---------------------")
             for i in range(my_count[0], space):
                 print(end = "  ")
             print(curr_node.value)

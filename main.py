@@ -1,24 +1,13 @@
 from Node import Node
 from Tree import Tree
 
-import random
+with open('data/numbers.txt') as file:
+    numbers = [int(s) for s in file.read().strip().split(',')]
 
+my_balanced_tree = Tree()
 
-my_tree = Tree()
-for i in range(8):
-    my_tree.add_node_by_value(random.randint(1, 100))
-    #my_tree.add_node_by_value(i)
+for i in numbers:
+    node = Node(i)
+    my_balanced_tree.add_red_black_node(node, verbose=False)
 
-
-# my_tree.pretty_print()
-
-my_tree.print_in_order_traversal()
-my_tree.pretty_print()
-
-
-my_tree.rotate_left(my_tree.root)
-
-# my_tree.pretty_print()
-
-my_tree.print_in_order_traversal()
-my_tree.pretty_print()
+my_balanced_tree.pretty_print()
