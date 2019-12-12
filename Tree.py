@@ -1,4 +1,4 @@
-from Node import Node
+from unbalanced_example.Node import Node
 
 
 class Tree:
@@ -137,8 +137,8 @@ class Tree:
         self.in_order_traversal_util(self.root)
         print("}}")
 
-
-    def set_child_util(self, parent, which_child, child_node):
+    @staticmethod
+    def set_child_util(parent, which_child, child_node):
         if (which_child != "left") and (which_child != "right"):
             return False
         if which_child == "left":
@@ -155,12 +155,25 @@ class Tree:
         elif parent.right_child == current_child:
             return self.set_child_util(parent, "right", new_child)
 
+    def rotate_left(self, node):
+        right_left_child = node.right_child.left_child
+        if node.parent:
+            self.replace_child(node.parent, node, node.right_child)
+        else:
+            self.root = node.right_child
+            self.root.parent = None
+        self.set_child_util(node.right_child, "left", node)
+        self.set_child_util(node, "right", right_left_child)
 
-
-
-
-
-
+    def rotate_right(self, node):
+        left_right_child = node.left_child.right_child
+        if node.parent:
+            self.replace_child_util(node.parent, node, node.left)
+        else:
+            self.root = node.left_child
+            self.root.parent = None
+        self.set_child_util(node.left_child, "right", node)
+        self.set_child_util(node, "left", left_right_child)
 
 
 
