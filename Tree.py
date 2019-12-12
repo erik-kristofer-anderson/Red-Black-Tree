@@ -1,6 +1,8 @@
 from unbalanced_example.Node import Node
 
 
+
+
 class Tree:
 
     def __init__(self):
@@ -133,12 +135,25 @@ class Tree:
                 curr_node = curr_node.left_child
         return False
 
+    def find_tree_depth(self):
+
+        def find_tree_depth_util(node):
+            left_height = right_height = 0
+            if node.left_child:
+                left_height = find_tree_depth_util(node.left_child) + 1
+            if node.right_child:
+                right_height = find_tree_depth_util(node.right_child) + 1
+            return max(left_height, right_height)
+
+        return find_tree_depth_util(self.root)
+
     def pretty_print(self, red_black=True):
         """
         function to print a 2D representation of the tree
         source: https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
         :return None:
         """
+        tree_height = self.find_tree_depth()
 
         def print_2d_util(curr_node, space):
             my_count = [6]
@@ -149,10 +164,12 @@ class Tree:
 
             print_2d_util(curr_node.right_child, space)
 
-            print("---------------------------------------------------------------------------------------"
-                  "----------------------------------")
+            bar = "-" * int(tree_height * my_count[0] * 2.5)
+            print(bar)
+            # print("---------------------------------------------------------------------------------------"
+            #       "----------------------------------")
             for i in range(my_count[0], space):
-                print(end = "  ")
+                print(end="  ")
 
             if curr_node.color == "red":
                 s = ": R"
@@ -396,7 +413,7 @@ class Tree:
 
     def try_case_6_rbt(self, node, sibling):
         if self.is_null_or_black_rbt(sibling.left_child) and self.is_non_null_and_red_rbt(sibling.right_child) \
-                and node == node.parent.right:
+                and node == node.parent.right_child:
             sibling.color = "red"
             sibling.right_child.color = "black"
             self.rotate_left(sibling)
