@@ -4,4 +4,4 @@ Some helpful PDF documents are available in [share_results](https://github.com/e
 
 I will also be bloggin about this on DEV.to. Here's what I've written so far:
 [Investigating tree height of a red black tree](https://dev.to/erikkristoferanderson/investigating-tree-height-of-a-red-black-tree-2pbh)  
-[I'm implementing a Red Black Tree in Python](I'm implementing a Red Black Tree in Python)  
+[I'm implementing a Red Black Tree in Python](https://dev.to/erikkristoferanderson/investigating-tree-height-of-a-red-black-tree-2pbh)  
