@@ -184,10 +184,12 @@ class Tree:
 
 
         count = [10]
+        my_count = [6]
         print_2d_util(self.root, 0)
-        print("---------------------------------------------------------------------------------------"
-              "----------------------------------")
-        print("===================================================")
+        bar = "-" * int(tree_height * my_count[0] * 2.5)
+        print(bar)
+        bar = "=" * int(tree_height * my_count[0] * 2.5)
+        print(bar)
 
     def in_order_traversal_util(self, curr_node):
         if not curr_node:
@@ -264,7 +266,6 @@ class Tree:
 
     def balance_tree(self, node, verbose=False):
         if verbose:
-            print('balance_tree line 2')
             self.pretty_print()
         if node.parent is None:
             node.color = "black"

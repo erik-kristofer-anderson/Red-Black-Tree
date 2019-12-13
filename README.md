@@ -1,0 +1,1 @@
+This is a computer science education project that started out as an assignment for comp 271 at Loyola in Fall 2019. It started as an idea to implement a red black tree to improve my understanding of the data structure, but I realized that it's also an opportunity to analyze data on the properties of red black trees.
